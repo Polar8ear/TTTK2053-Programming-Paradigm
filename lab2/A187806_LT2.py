@@ -12,20 +12,21 @@ def main():
     }
 
     # Method 2, extracting using zip
-    info_key_tuple = ('name', 'age', 'favouriteBeverage')
+    info_key_tuple = ("name", "age", "favouriteBeverage")
     info_dict = zip(info_tuple, info_key_tuple)
 
     # Printing the result
-    print('info_dict keys:')
+    print("info_dict keys:")
 
     # Method 1, using spreading and printing
-    print(*info_dict.keys(), sep=", ") # The asterisk will 'spread' the key instead of returning as an array
+    print(
+        *info_dict.keys(), sep=", "
+    )  # The asterisk will 'spread' the key instead of returning as an array
 
     # Method 2, using for loop
     # for key in info_dict.keys():
     #     print(f'  - {key}')
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

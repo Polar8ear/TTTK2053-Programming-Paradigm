@@ -1,8 +1,8 @@
 def printPythonBetween5and6():
-    for i in range(1, 10+1):
+    for i in range(1, 10 + 1):
         print(i)
-        if (i == 5):
-            print('Python')
+        if i == 5:
+            print("Python")
 
     print()
 
@@ -13,18 +13,18 @@ def printNumberStatistics():
 
     NUMBERS_COUNT = 10
 
-    for i in range(1, NUMBERS_COUNT+1):
+    for i in range(1, NUMBERS_COUNT + 1):
         while True:
             try:
-                inputString = input(
-                    f"Please enter the no.{i} floating point number:\n")
+                inputString = input(f"Please enter the no.{i} floating point number:\n")
                 number = float(inputString)
                 sum += number
                 product *= number
                 break
             except ValueError:
                 print(
-                    f"You've entered '{inputString}' that cant be converted to floating point number")
+                    f"You've entered '{inputString}' that cant be converted to floating point number"
+                )
             finally:
                 print()
 
@@ -46,9 +46,8 @@ def main():
     printNumberStatistics()
     printBurgerSummary("Bun", "Bun", "Bun")
     printBurgerSummary("Bun", "Meat Patty", "Cheese", "Bun")
-    printBurgerSummary("Bun", "Cheese", "Egg",
-                       "Tomato Sauce", "Pickles", "Bun")
+    printBurgerSummary("Bun", "Cheese", "Egg", "Tomato Sauce", "Pickles", "Bun")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

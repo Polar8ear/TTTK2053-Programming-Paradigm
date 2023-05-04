@@ -21,7 +21,7 @@ BACKGROUND_COLOR = "lightblue"
 GROUND_COLOR = "green"
 LEAF_COLOR = "chartreuse2"
 TRUNK_COLOR = "brown"
-TRUNK_OUTLINE_COLOR= ""
+TRUNK_OUTLINE_COLOR = ""
 SUN_COLOR = "orange"
 CLOUD_COLOR = "#FAEBD7"
 CLOUD_OUTLINE_COLOR = ""
@@ -61,6 +61,13 @@ def set_turtle(t: turtle.Turtle, x=0, y=0, direction: Direction = "EAST"):
     t.color("black")
 
 
+def draw_circle(t, radius, color="", outline_color=""):
+    t.color(outline_color, color)
+    t.begin_fill()
+    t.circle(radius)
+    t.end_fill()
+
+
 def draw_clouds(t: turtle.Turtle, x: int, y: int, size: int):
     set_turtle(t, x, y)
     for _ in range(4):
@@ -95,7 +102,7 @@ def draw_hill(t: turtle.Turtle, x: int, y: int, base_length: int):
     t.end_fill()
 
 
-def draw_tree(t: turtle.Turtle, x: int, y: int, size):
+def draw_tree(t: turtle.Turtle, x: int, y: int, size: float):
     def draw_trunk(t: turtle.Turtle, width: int, height: int):
         t.color(TRUNK_OUTLINE_COLOR, TRUNK_COLOR)
         t.begin_fill()
@@ -142,7 +149,7 @@ def draw_ground(t: turtle.Turtle, y=0):
     t.end_fill()
 
 
-def draw_sun(t: turtle.Turtle, x=0, y=100, size=100):
+def draw_sun(t: turtle.Turtle, x=0, y=100, size=100.0):
     CORNER_DISTANCE = 10
     CORNER_COUNT = 12
 
@@ -175,14 +182,7 @@ def draw_sun(t: turtle.Turtle, x=0, y=100, size=100):
         t.seth(current_angle)  # set the angle back to original angle
 
 
-def draw_circle(t, radius, color="", outline_color=""):
-    t.color(outline_color, color)
-    t.begin_fill()
-    t.circle(radius)
-    t.end_fill()
-
-
-def draw_flower(t, x, y, radius):
+def draw_flower(t: turtle.Turtle, x: int, y: int, radius: float):
     set_turtle(t, x, y)
     for _ in range(4):
         draw_circle(t, radius, FLOWER_PETAL_COLOR, FLOWER_PETAL_OUTLINE_COLOR)

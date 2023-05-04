@@ -41,7 +41,12 @@ Direction = Literal["EAST", "SOUTH", "WEST", "NORTH"]
 
 
 def set_turtle(t: turtle.Turtle, x=0, y=0, direction: Direction = "EAST"):
-    """A utility function to reset the turtle, put it in a certain position, without drawing anything in the journey"""
+    """
+    A utility function to reset the turtle, put it in a certain position, without drawing anything in the journey
+
+    The position follows Cartesian plane where the center is (0, 0),
+    and a negative x indicates left of the screen and negative y indicates bottom part of the screen
+    """
     t.penup()
     t.setposition(x, y)
     DIRECTION_TO_HEADING: Dict[Direction, int] = {

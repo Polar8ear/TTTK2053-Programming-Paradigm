@@ -105,7 +105,13 @@ def draw_hill(t: turtle.Turtle, x: int, y: int, base_length: int):
     t.end_fill()
 
 
-def draw_tree(t: turtle.Turtle, x: int, y: int, size: float):
+def draw_tree(t: turtle.Turtle, x: int, y: int, size=1.0):
+    """
+    1st Function with for loop, that's called at least twice
+
+    Size is a float where 1 is the original size, 2 will be 2x the original size etc
+    """
+
     def draw_trunk(t: turtle.Turtle, width: int, height: int):
         t.color(TRUNK_OUTLINE_COLOR, TRUNK_COLOR)
         t.begin_fill()

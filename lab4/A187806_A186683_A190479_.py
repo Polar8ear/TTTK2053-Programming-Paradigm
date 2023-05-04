@@ -203,7 +203,7 @@ def draw_flower(t: turtle.Turtle, x: int, y: int, radius: float):
     draw_circle(t, radius * 0.875, FLOWER_CENTER_COLOR, FLOWER_CENTER_OUTLINE_COLOR)
 
 
-def main_draw():
+def mainDraw():
     """Entry point to this module"""
 
     # Overall turtle configuration
@@ -244,4 +244,4 @@ def main_draw():
 
 
 if __name__ == "__main__":
-    main_draw()
+    mainDraw()

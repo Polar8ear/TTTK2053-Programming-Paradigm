@@ -21,9 +21,19 @@ BACKGROUND_COLOR = "lightblue"
 GROUND_COLOR = "green"
 LEAF_COLOR = "chartreuse2"
 TRUNK_COLOR = "brown"
+TRUNK_OUTLINE_COLOR= ""
 SUN_COLOR = "orange"
 CLOUD_COLOR = "#FAEBD7"
-
+CLOUD_OUTLINE_COLOR = ""
+HILL_COLOR = "#66CD00"
+HILL_OUTLINE_COLOR = ""
+LEAF_OUTLINE_COLOR = "#0D6B21"
+SUN_OUTLINE_COLOR = ""
+GROUND_OUTLINE_COLOR = ""
+FLOWER_PETAL_COLOR = "yellow"
+FLOWER_CENTER_COLOR = "orange"
+FLOWER_PETAL_OUTLINE_COLOR = "black"
+FLOWER_CENTER_OUTLINE_COLOR = ""
 
 
 # A type for direction, only allow 4 directions
@@ -47,17 +57,10 @@ def set_turtle(t: turtle.Turtle, x=0, y=0, direction: Direction = "EAST"):
 
 
 def draw_clouds(t: turtle.Turtle, x: int, y: int, size: int):
-    def draw_circle(t: turtle.Turtle, size: int):
-        t.fillcolor(CLOUD_COLOR)
-        t.pencolor("")
-        t.begin_fill()
-        t.circle(size)
-        t.end_fill()
-
     set_turtle(t, x, y)
     for _ in range(4):
         t.right(45)
-        draw_circle(t, size)
+        draw_circle(t, size, CLOUD_COLOR, CLOUD_OUTLINE_COLOR)
         t.left(135)
 
 
@@ -76,7 +79,7 @@ def draw_bird(t: turtle.Turtle, x: int, y: int):
 def draw_hill(t: turtle.Turtle, x: int, y: int, base_length: int):
     set_turtle(t, x - base_length / 2, y)
     slant = math.sqrt(base_length**2 / 2)
-    t.fillcolor("#228B22")
+    t.color(HILL_OUTLINE_COLOR, HILL_COLOR)
     t.begin_fill()
     t.left(45)
     t.forward(slant)
@@ -89,7 +92,7 @@ def draw_hill(t: turtle.Turtle, x: int, y: int, base_length: int):
 
 def draw_tree(t: turtle.Turtle, x: int, y: int, size):
     def draw_trunk(t: turtle.Turtle, width: int, height: int):
-        t.fillcolor(colour)
+        t.color(TRUNK_OUTLINE_COLOR, TRUNK_COLOR)
         t.begin_fill()
         t.forward(width)
         t.left(90)
@@ -105,7 +108,7 @@ def draw_tree(t: turtle.Turtle, x: int, y: int, size):
     draw_trunk(t, 15 * size, 80 * size)
 
     def draw_leaf(t: turtle.Turtle, side_length: int):
-        t.fillcolor(colour)
+        t.color(LEAF_OUTLINE_COLOR, LEAF_COLOR)
         t.begin_fill()
         t.forward(side_length)
         t.left(135)
@@ -124,9 +127,10 @@ def draw_ground(t: turtle.Turtle, y=0):
     screen_width = turtle.window_width()
     screen_height = turtle.window_height()
     set_turtle(t, -(screen_width / 2), y)
-    t.color("", GROUND_COLOR)
+    t.color(GROUND_OUTLINE_COLOR, GROUND_COLOR)
     t.begin_fill()
     distances = (screen_width, screen_height // 2 + y) * 2
+
     for distance in distances:
         t.forward(distance)
         t.right(90)
@@ -138,7 +142,7 @@ def draw_sun(t: turtle.Turtle, x=0, y=100, size=100):
     CORNER_COUNT = 12
 
     set_turtle(t, x, y - size / 2)
-    t.color("", SUN_COLOR)
+    t.color(SUN_OUTLINE_COLOR, SUN_COLOR)
     t.begin_fill()
     t.circle(size / 2)
     t.end_fill()
@@ -147,7 +151,7 @@ def draw_sun(t: turtle.Turtle, x=0, y=100, size=100):
     corner_angle = 360 / CORNER_COUNT
 
     set_turtle(t, x, y + corner_radius)
-    t.color("", SUN_COLOR)
+    t.color(SUN_OUTLINE_COLOR, SUN_COLOR)
 
     # go to starting position of corner
     t.circle(-corner_radius, -corner_angle / 2)
@@ -166,6 +170,23 @@ def draw_sun(t: turtle.Turtle, x=0, y=100, size=100):
         t.seth(current_angle)  # set the angle back to original angle
 
 
+def draw_circle(t, radius, color="", outline_color=""):
+    t.color(outline_color, color)
+    t.begin_fill()
+    t.circle(radius)
+    t.end_fill()
+
+
+def draw_flower(t, x, y, radius):
+    set_turtle(t, x, y)
+    for _ in range(4):
+        draw_circle(t, radius, FLOWER_PETAL_COLOR, FLOWER_PETAL_OUTLINE_COLOR)
+        t.right(90)
+
+    set_turtle(t, x - radius * 0.85, y, "SOUTH")
+    draw_circle(t, radius * 0.875, FLOWER_CENTER_COLOR, FLOWER_CENTER_OUTLINE_COLOR)
+
+
 def main_draw():
     """Entry point to this module"""
     michelangelo = turtle.Turtle()  # Ninja😉
@@ -174,7 +195,7 @@ def main_draw():
     draw_sun(michelangelo, y=-100 + 50, size=100)
 
     draw_hill(michelangelo, -100, -100, 250)
-    draw_hill(michelangelo, 230/2, -100, 250)
+    draw_hill(michelangelo, 230 / 2, -100, 250)
 
     draw_ground(michelangelo, -100)
 
@@ -189,11 +210,10 @@ def main_draw():
     draw_tree(michelangelo, 175, -165, 0.7)
     draw_tree(michelangelo, 250, -170, 0.8)
 
+    draw_flower(michelangelo, -150, -150, 20)
+    draw_flower(michelangelo, -300, -175, 15)
 
-    michelangelo.shape('turtle')
-    set_turtle(michelangelo, -100, -100, "NORTH")
-    michelangelo.shapesize(5, 5)
-    michelangelo.color('black','green')
+    michelangelo.hideturtle()
 
 
 if __name__ == "__main__":
@@ -201,7 +221,7 @@ if __name__ == "__main__":
     turtle.bgcolor(BACKGROUND_COLOR)
 
     screen = turtle.Screen()
-    screen.setup(800,450)
+    screen.setup(800, 450)
     screen.cv._rootwindow.resizable(False, False)
     main_draw()
     turtle.exitonclick()

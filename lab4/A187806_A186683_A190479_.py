@@ -62,13 +62,15 @@ def draw_clouds(t: turtle.Turtle, x: int, y: int, size: int):
 
 
 def draw_bird(t: turtle.Turtle, x: int, y: int):
+    t.pensize(4)
     set_turtle(t, x, y)
     t.right(-90)
-    t.circle(45, extent=90)
+    t.circle(15, extent=150)
     set_turtle(t, x, y, "NORTH")
-    t.circle(-45, extent=90)
-    set_turtle(t, x - 30, y)
-    t.forward(60)
+    t.circle(-15, extent=150)
+    set_turtle(t, x - 5, y)
+    t.forward(10)
+    t.pensize(1)
 
 
 def draw_hill(t: turtle.Turtle, x: int, y: int, base_length: int):

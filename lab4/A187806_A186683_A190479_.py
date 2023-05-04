@@ -1,5 +1,5 @@
-"""
-Created on March 2022 (rev. 2023)
+"""A script to draw beautiful natural scenery with turtle
+Created on May 2023
 
 @author: CHUO NGIU BING (A187806)
 @author: LIM GUAN PENG (A186683)
@@ -42,6 +42,14 @@ FLOWER_CENTER_OUTLINE_COLOR = ""
 # A type for direction, only allow 4 directions
 Direction = Literal["EAST", "SOUTH", "WEST", "NORTH"]
 
+# A dict that maps Direction to internal heading of turtle
+DIRECTION_TO_HEADING: Dict[Direction, int] = {
+    "EAST": 0,
+    "NORTH": 90,
+    "WEST": 180,
+    "SOUTH": 270,
+}
+
 
 def set_turtle(t: turtle.Turtle, x=0, y=0, direction: Direction = "EAST"):
     """
@@ -52,13 +60,6 @@ def set_turtle(t: turtle.Turtle, x=0, y=0, direction: Direction = "EAST"):
     """
     t.penup()
     t.setposition(x, y)
-    DIRECTION_TO_HEADING: Dict[Direction, int] = {
-        "EAST": 0,
-        "NORTH": 90,
-        "WEST": 180,
-        "SOUTH": 270,
-    }
-
     t.seth(DIRECTION_TO_HEADING[direction])
     t.pendown()
     t.color("black")

@@ -17,22 +17,22 @@ from typing import Dict, Literal
 # We have used some typing in the parameter of the functions so that we can autocomplete the function names😅
 
 # Variables to change colors of different parts of the drawings easily
-BACKGROUND_COLOR = "lightblue"
-GROUND_COLOR = "green"
-LEAF_COLOR = "chartreuse2"
-TRUNK_COLOR = "brown"
+BACKGROUND_COLOR = "#DDEAF3"
+GROUND_COLOR = "#AFD932"
+LEAF_COLOR = "#7AE334"
+TRUNK_COLOR = "#A69086"
 TRUNK_OUTLINE_COLOR = ""
 SUN_COLOR = "orange"
-CLOUD_COLOR = "#FAEBD7"
+CLOUD_COLOR = "#FFFFFF"
 CLOUD_OUTLINE_COLOR = ""
-HILL_COLOR = "#66CD00"
+HILL_COLOR = "#41CC3A"
 HILL_OUTLINE_COLOR = ""
-LEAF_OUTLINE_COLOR = "#0D6B21"
+LEAF_OUTLINE_COLOR = "#40A371"
 SUN_OUTLINE_COLOR = ""
 GROUND_OUTLINE_COLOR = ""
-FLOWER_PETAL_COLOR = "yellow"
-FLOWER_CENTER_COLOR = "orange"
-FLOWER_PETAL_OUTLINE_COLOR = "black"
+FLOWER_PETAL_COLOR = "#E68060"
+FLOWER_CENTER_COLOR = "#F2E75C"
+FLOWER_PETAL_OUTLINE_COLOR = "#DB445A"
 FLOWER_CENTER_OUTLINE_COLOR = ""
 
 

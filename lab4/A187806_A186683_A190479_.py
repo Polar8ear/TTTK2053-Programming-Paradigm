@@ -87,8 +87,8 @@ def draw_hill(t: turtle.Turtle, x: int, y: int, base_length: int):
     t.end_fill()
 
 
-def draw_tree(t: turtle.Turtle, x: int, y: int):
-    def draw_trunk(t: turtle.Turtle, width: int, height: int, colour: str):
+def draw_tree(t: turtle.Turtle, x: int, y: int, size):
+    def draw_trunk(t: turtle.Turtle, width: int, height: int):
         t.fillcolor(colour)
         t.begin_fill()
         t.forward(width)
@@ -102,9 +102,9 @@ def draw_tree(t: turtle.Turtle, x: int, y: int):
         t.end_fill()
 
     set_turtle(t, x, y)
-    draw_trunk(t, 15, 80, TRUNK_COLOR)
+    draw_trunk(t, 15 * size, 80 * size)
 
-    def draw_leaf(t: turtle.Turtle, side_length: int, colour: str):
+    def draw_leaf(t: turtle.Turtle, side_length: int):
         t.fillcolor(colour)
         t.begin_fill()
         t.forward(side_length)
@@ -115,17 +115,9 @@ def draw_tree(t: turtle.Turtle, x: int, y: int):
         t.left(135)
         t.end_fill()
 
-    set_turtle(t, x - 35, y + 80)
-    draw_leaf(t, 90, LEAF_COLOR)
-
-    set_turtle(t, x - 35, y + 120)
-    draw_leaf(t, 90, LEAF_COLOR)
-
-    set_turtle(t, x - 35, y + 160)
-    draw_leaf(t, 90, LEAF_COLOR)
-
-    set_turtle(t, x - 35, y + 200)
-    draw_leaf(t, 90, LEAF_COLOR)
+    for i in range(4):
+        set_turtle(t, x - 35 * size, y + (80 + 40 * i) * size)
+        draw_leaf(t, 90 * size)
 
 
 def draw_ground(t: turtle.Turtle, y=0):
@@ -193,9 +185,9 @@ def main_draw():
     draw_bird(michelangelo, -220, 5)
     draw_bird(michelangelo, -265, 32)
 
-    draw_tree(michelangelo, 200, -150)
-    draw_tree(michelangelo, 175, -165)
-    draw_tree(michelangelo, 250, -170)
+    draw_tree(michelangelo, 200, -150, 0.5)
+    draw_tree(michelangelo, 175, -165, 0.7)
+    draw_tree(michelangelo, 250, -170, 0.8)
 
 
     michelangelo.shape('turtle')

@@ -17,6 +17,7 @@ from typing import Dict, Literal
 # We have used some typing in the parameter of the functions so that we can autocomplete the function names😅
 
 # Variables to change colors of different parts of the drawings easily
+# Empty string ("") indicates transparent
 BACKGROUND_COLOR = "#DDEAF3"
 SUN_COLOR = "orange"
 SUN_OUTLINE_COLOR = ""

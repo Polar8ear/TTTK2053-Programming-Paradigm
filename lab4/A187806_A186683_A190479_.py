@@ -192,6 +192,7 @@ def draw_sun(t: turtle.Turtle, x=0, y=100, size=100.0):
 
 
 def draw_flower(t: turtle.Turtle, x: int, y: int, radius: float):
+    """2nd function with for loop that has been called at least twice"""
     set_turtle(t, x, y)
     for _ in range(4):
         draw_circle(t, radius, FLOWER_PETAL_COLOR, FLOWER_PETAL_OUTLINE_COLOR)
@@ -203,6 +204,14 @@ def draw_flower(t: turtle.Turtle, x: int, y: int, radius: float):
 
 def main_draw():
     """Entry point to this module"""
+
+    # Overall turtle configuration
+    turtle.bgcolor(BACKGROUND_COLOR)
+
+    screen = turtle.Screen()
+    screen.setup(800, 450)
+    screen.cv._rootwindow.resizable(False, False)
+
     michelangelo = turtle.Turtle()  # Ninja😉
     michelangelo.speed(0)
 
@@ -220,22 +229,18 @@ def main_draw():
     draw_bird(michelangelo, -220, 5)
     draw_bird(michelangelo, -265, 32)
 
+    # Function with for loop being called at least twice
     draw_tree(michelangelo, 200, -150, 0.5)
     draw_tree(michelangelo, 175, -165, 0.7)
     draw_tree(michelangelo, 250, -170, 0.8)
 
+    # Function with for loop being called at least twice
     draw_flower(michelangelo, -150, -150, 20)
     draw_flower(michelangelo, -300, -175, 15)
 
     michelangelo.hideturtle()
+    turtle.exitonclick()
 
 
 if __name__ == "__main__":
-    # Overall turtle configuration
-    turtle.bgcolor(BACKGROUND_COLOR)
-
-    screen = turtle.Screen()
-    screen.setup(800, 450)
-    screen.cv._rootwindow.resizable(False, False)
     main_draw()
-    turtle.exitonclick()

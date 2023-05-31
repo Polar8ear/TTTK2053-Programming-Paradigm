@@ -1,53 +1,100 @@
 #include <stdio.h>
 
+//Use enum to make the code more readable
+enum Category
+{
+
+  FREEZING,
+
+  COLD,
+
+  MODERATE,
+
+  HOT,
+
+  EXTREME
+
+};
+
+double getNumber()
+{
+
+  double number;
+  int termCount = scanf("%lf", &number);
+  while (getchar() != '\n')
+    ;
+
+  while (1)
+  {
+    // Handle Test Case 1: Non-numerical input
+
+    if (termCount == 0)
+    {
+      // Test Case 1
+      printf("Please enter a valid numerical input: ");
+    }
+    else
+    {
+      // If no error is found
+      return number;
+    }
+
+    termCount = scanf("%lf", &number);
+    while (getchar() != '\n') //remove unnecessary character in input buffer
+      ;
+  }
+}
+
 int main()
 {
   double temp;
-  int category;
+  enum Category category;
 
-  scanf("%lf", &temp);
+  printf("Enter the temperature in degrees Celsius: ");
+  temp = getNumber();
 
   if (temp < 0)
   {
-    category = 0;
+    category = FREEZING;
   }
   else if (temp < 10 && temp >= 0)
   {
-    category = 1;
+    category = COLD;
   }
-  else if (temp < 25 && temp >= 11)
+  else if (temp < 25 && temp >= 10)
   {
-    category = 2;
+    category = MODERATE;
   }
-  else if (temp < 35 && temp >= 26)
+  else if (temp < 35 && temp >= 25)
   {
-    category = 3;
+    category = HOT;
   }
   else
   {
-    category = 4;
+    category = EXTREME;
   }
 
   switch (category)
   {
-  case 0:
-    printf("Freezing");
+  case FREEZING:
+    printf("The entered temperature is freezing.");
+
     break;
 
-  case 1:
-    printf("Cold");
+  case COLD:
+    printf("The entered temperature is cold.");
     break;
 
-  case 2:
-    printf("Moderate");
+  case MODERATE:
+    printf("The entered temperature is moderate.");
     break;
 
-  case 3:
-    printf("Hot");
+  case HOT:
+    printf("The entered temperature is hot.");
     break;
 
-  case 4:
-    printf("Extreme");
+  case EXTREME:
+    printf("The entered temperature is extreme.");
     break;
   }
 }

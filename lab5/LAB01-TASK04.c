@@ -47,11 +47,9 @@ int getNumber()
 
 int main()
 {
-    int guess;                     // User's Guess
-    const int CLOSE_THRESHOLD = 5; // difference value between target and guess is within 5
+    int guess; // User's Guess
     srand(time(0));
     int target = (rand() % 100 + 1); // get random number between 1 to 100
-    printf("%d", target);
     printf("Welcome to the Number Guessing Game!\n");
     printf("Guess a number between 1 and 100:");
     guess = getNumber();
@@ -61,25 +59,11 @@ int main()
 
         if (guess < target)
         {
-            if (target - guess <= CLOSE_THRESHOLD)
-            {
-                printf("You're close! Guess a higher number: ");
-            }
-            else
-            {
-                printf("Too low! Guess a higher number: ");
-            }
+            printf("Too low! Guess a higher number: ");
         }
         else
         {
-            if (guess - target <= CLOSE_THRESHOLD)
-            {
-                printf("You're close! Guess a lower number: ");
-            }
-            else
-            {
-                printf("Too high! Guess a lower number: ");
-            }
+            printf("Too high! Guess a lower number: ");
         }
         guess = getNumber();
     };

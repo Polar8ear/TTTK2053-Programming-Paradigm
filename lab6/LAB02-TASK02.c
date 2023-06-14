@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define INITIAL_STUDENT_COUNT 10
 
@@ -115,14 +116,41 @@ void addStudent(StudentList *studentList)
   fgets(newStudent.rollNumber, sizeof(newStudent.rollNumber) + 1, stdin);
   newStudent.rollNumber[strlen(newStudent.rollNumber)] = '\0';
 
-  // printf("Age: ");
-  // newStudent.age = getInteger();
+  printf("Age: ");
+  newStudent.age = getInteger();
 
-  // printf("GPA: ");
-  // newStudent.gpa = getDouble();
+  printf("GPA: ");
+  newStudent.gpa = getDouble();
 
   studentList->students[studentList->studentCount] = newStudent;
   studentList->studentCount++;
+}
+
+void searchStudent(StudentList *studentList)
+{
+  char name[256];
+  printf("Enter the name of the student to search:\n");
+  fgets(name, 256, stdin);
+  bool exist = false;
+  for (int i = 0; i < studentList->studentCount; i++)
+  {
+    printf("%s", name);
+    if (strcmp(studentList->students[i].name, name) == 0)
+    {
+      printf(studentList->students[i].name);
+      exist = true;
+      // printf("Student found:\n");
+      // printf("Name: %s", studentList->students[i].name);
+      // printf("Matric Number: %s", studentList->students[i].rollNumber);
+      // printf("Age: %d", studentList->students[i].age);
+      // printf("GPA: %.2f", studentList->students[i].gpa);
+      break;
+    }
+  }
+  if (exist == false)
+  {
+    printf("Student not found:");
+  }
 }
 
 void updateStudent(StudentList *studentList)
@@ -172,7 +200,6 @@ int main()
   displayStudent(&studentList);
   addStudent(&studentList);
   addStudent(&studentList);
-  // addStudent(&studentList);
-  updateStudent(&studentList);
-  displayStudent(&studentList);
+  addStudent(&studentList);
+  searchStudent(&studentList);
 }

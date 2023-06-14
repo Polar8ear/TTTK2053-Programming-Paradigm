@@ -67,7 +67,12 @@ typedef struct
 
 void initializeStudentList(StudentList *studentList)
 {
-  studentList->students = (Student *)malloc(sizeof(Student) * INITIAL_STUDENT_COUNT);
+  studentList->students = malloc(sizeof(Student) * INITIAL_STUDENT_COUNT);
+  if (studentList->students == NULL)
+  {
+    printf("Error allocating memory");
+    exit(1);
+  }
   studentList->studentCount = 0;
   studentList->studentsSize = INITIAL_STUDENT_COUNT;
 }
@@ -102,31 +107,72 @@ void addStudent(StudentList *studentList)
   printf("Enter student details:\n");
   Student newStudent;
 
-  printf("Name: ");
-  fgets(newStudent.name, sizeof(newStudent.name), stdin);
-  newStudent.name[strlen(newStudent.name) - 1] = '\0';
+  // printf("Name: ");
+  // fgets(newStudent.name, sizeof(newStudent.name), stdin);
+  // newStudent.name[strlen(newStudent.name) - 1] = '\0';
 
   printf("Matric Number: ");
-  fgets(newStudent.rollNumber, sizeof(newStudent.rollNumber), stdin);
-  newStudent.rollNumber[strlen(newStudent.rollNumber) - 1] = '\0';
+  fgets(newStudent.rollNumber, sizeof(newStudent.rollNumber) + 1, stdin);
+  newStudent.rollNumber[strlen(newStudent.rollNumber)] = '\0';
 
-  printf("Age: ");
-  newStudent.age = getInteger();
+  // printf("Age: ");
+  // newStudent.age = getInteger();
 
-  printf("GPA: ");
-  newStudent.gpa = getDouble();
+  // printf("GPA: ");
+  // newStudent.gpa = getDouble();
 
   studentList->students[studentList->studentCount] = newStudent;
   studentList->studentCount++;
 }
 
+void updateStudent(StudentList *studentList)
+{
+  Student draftStudent;
+
+  printf("Enter the matric number of the student to update: ");
+  scanf("%s", draftStudent.rollNumber);
+
+  for (size_t i = 0; i < studentList->studentCount; i++)
+  {
+    printf("%s", draftStudent.rollNumber);
+    printf("%s", studentList->students[i].rollNumber);
+
+    // if (strcmp(draftStudent.rollNumber, studentList->students[i].rollNumber) == 0)
+    if(1)
+    {
+      printf("Enter updated details: \n");
+      printf("Name: \n");
+      fgets(studentList->students[i].name, sizeof(studentList->students[i].name), stdin);
+      studentList->students[i].name[strlen(studentList->students[i].name) - 1] = '\0';
+
+      printf("Matric Number: \n");
+      fgets(studentList->students[i].rollNumber, sizeof(studentList->students[i].rollNumber), stdin);
+      studentList->students[i].rollNumber[strlen(studentList->students[i].rollNumber) - 1] = '\0';
+
+      printf("Age: \n");
+      studentList->students[i].age = getInteger();
+
+      printf("GPA: \n");
+      studentList->students[i].gpa = getDouble();
+
+      // print update successful
+
+      return;
+    }
+  }
+
+  // not found
+}
+
 int main()
 {
   StudentList studentList;
+
   initializeStudentList(&studentList);
   displayStudent(&studentList);
   addStudent(&studentList);
   addStudent(&studentList);
-  addStudent(&studentList);
+  // addStudent(&studentList);
+  updateStudent(&studentList);
   displayStudent(&studentList);
 }

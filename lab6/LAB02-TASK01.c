@@ -5,12 +5,17 @@
 
 int calculateSum(int array_list[], int size);
 int initialize_array(int array_list[], int size);
-int findMaximum(int array_list[], int size, int *max_index);
+struct Maximum findMaximum(int array_list[], int size);
+void reverseArray(int *array, int size);
+
+struct Maximum
+{
+    int index;
+    int max;
+};
 
 int main()
 {
-    int max_index;
-    int sum;
     int size = 10;
     int integer_array[10];
     initialize_array(integer_array, size);
@@ -20,14 +25,25 @@ int main()
     {
         printf("%d ", integer_array[i]);
     }
-    printf("\n");
+    printf("\n\n");
 
-    sum = calculateSum(integer_array, 10);
+    int sum = calculateSum(integer_array, 10);
     printf("Sum of all elements: %d\n", sum);
 
-    int max = findMaximum(integer_array, size, max_index);
-    printf("Maximum element: %d", max);
-    printf(",Index: %d", max_index);
+    struct Maximum m1 = findMaximum(integer_array, size);
+    printf("Maximum element: %d", m1.max);
+    printf(", Index: %d", m1.index);
+
+    printf("\n\n");
+    reverseArray(integer_array, size);
+
+    printf("Reversed Array: ");
+    for (size_t i = 0; i < 10; i++)
+    {
+        printf("%d ", integer_array[i]);
+    }
+    printf("\n");
+
     return 0;
 }
 
@@ -53,17 +69,48 @@ int calculateSum(int array_list[], int size)
     return sum;
 }
 
-int findMaximum(int array_list[], int size, int *max_index)
+struct Maximum findMaximum(int array_list[], int size)
 {
-    int max = INT_MIN;
+    struct Maximum m1 = {0, INT_MIN};
     for (int i = 0; i < size; i++)
     {
-        if (array_list[i] > max)
+        if (array_list[i] > m1.max)
         {
-            max = array_list[i];
-            max_index = i;
+            m1.max = array_list[i];
+            m1.index = i;
         }
     }
 
-    return max;
+    return m1;
+}
+
+// void reverseArray(int array[], int size)
+// {
+//     //when an odd integer number divided by 2 in C will be rounded down
+//     for (int i = 0; i < size / 2; i++)
+//     {
+//         // [0,1,2,3,4,5]
+//         int temp = array[i];
+//         // temp = 0
+//         array[i] = array[size-i-1];
+//         // [5,1,2,3,4,5]
+//         array[size-i-1] = temp;
+//         // [5,1,2,3,4,0]
+//     }
+// }
+
+void reverseArray(int *array, int size)
+{
+    // when an odd integer number divided by 2 in C will be rounded down
+    for (int i = 0; i < size / 2; i++)
+    {
+        // [0,1,2,3,4,5]
+        int temp = *(array + i);
+        // printf("%d ", *(array +  i));
+        // // temp = 0
+        *(array + i) = *(array + (size - i - 1));
+        // // [5,1,2,3,4,5]
+        *(array + (size - i - 1)) = temp;
+        // // [5,1,2,3,4,0]
+    }
 }

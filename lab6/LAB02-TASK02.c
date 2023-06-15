@@ -5,36 +5,35 @@
 
 #define INITIAL_STUDENT_COUNT 10
 
-int getInteger()
-{
+// utility functions
 
+int getInteger(char prompt[])
+{
   double number;
   while (1)
   {
+    printf("%s", prompt);
     int termCount = scanf("%lf", &number);
     while (getchar() != '\n')
       ;
-    if (termCount == 0)
+
+    if (termCount == 0 || number - (int)number != 0.0)
     {
       printf("Please enter a valid integer input\n");
+      continue;
     }
-    else if (number - (int)number != 0)
-    {
-      printf("Please enter an integer value\n");
-    }
-    else
-    {
-      // If no error is found
-      return (int)number;
-    }
+
+    // If no error is found
+    return (int)number;
   }
 }
 
-double getDouble()
+double getDouble(char prompt[])
 {
   double number;
   while (1)
   {
+    printf("%s", prompt);
     int termCount = scanf("%lf", &number);
     while (getchar() != '\n')
       ;
@@ -42,14 +41,63 @@ double getDouble()
     if (termCount == 0)
     {
       printf("Please enter a valid decimal input\n");
+      continue;
     }
-    else
-    {
-      // If no error is found
-      return number;
-    }
+
+    // If no error is found
+    return number;
   }
 }
+
+void getString(char str[], size_t size, char prompt[])
+{
+  char raw[256] = ""; // A raw input string with sufficiently large size, initialised to empty string.
+  while (1)
+  {
+    printf("%s", prompt);
+    scanf("%[^\n]%*c", raw);
+
+    //  ^\n tells to take input until newline doesn't get encountered.
+    //  Then, with %*c, it reads newline character and here used * indicates that this newline character is discarded.
+    // reference: https://stackoverflow.com/questions/314401/how-to-read-a-line-from-the-console-in-c
+
+    if (strlen(raw) >= size)
+    {
+      printf("Come on lah enter a string with less than %ld characters\n", size);
+      continue;
+    }
+
+    strcpy(str, raw);
+    return;
+  };
+}
+
+void getName(char str[], size_t size)
+{
+  getString(str, size, "Name: ");
+}
+
+void getRollNumber(char str[], size_t size)
+{
+  getString(str, size, "Matric: ");
+}
+
+void getRollNumberWithPrompt(char str[], size_t size, char prompt[])
+{
+  getString(str, size, prompt);
+}
+
+void getGPA(float *gpa)
+{
+  *gpa = getDouble("GPA: ");
+}
+
+void getAge(int *age)
+{
+  *age = getInteger("Age: ");
+}
+
+// Important structures
 
 typedef struct
 {
@@ -65,6 +113,8 @@ typedef struct
   size_t studentCount;
   size_t studentsSize;
 } StudentList;
+
+// Operation Functions
 
 void initializeStudentList(StudentList *studentList)
 {
@@ -108,19 +158,10 @@ void addStudent(StudentList *studentList)
   printf("Enter student details:\n");
   Student newStudent;
 
-  // printf("Name: ");
-  // fgets(newStudent.name, sizeof(newStudent.name), stdin);
-  // newStudent.name[strlen(newStudent.name) - 1] = '\0';
-
-  printf("Matric Number: ");
-  fgets(newStudent.rollNumber, sizeof(newStudent.rollNumber) + 1, stdin);
-  newStudent.rollNumber[strlen(newStudent.rollNumber)] = '\0';
-
-  printf("Age: ");
-  newStudent.age = getInteger();
-
-  printf("GPA: ");
-  newStudent.gpa = getDouble();
+  getName(newStudent.name, sizeof(newStudent.name));
+  getRollNumber(newStudent.rollNumber, sizeof(newStudent.rollNumber));
+  getAge(&newStudent.age);
+  getGPA(&newStudent.gpa);
 
   studentList->students[studentList->studentCount] = newStudent;
   studentList->studentCount++;
@@ -137,13 +178,12 @@ void searchStudent(StudentList *studentList)
     printf("%s", name);
     if (strcmp(studentList->students[i].name, name) == 0)
     {
-      printf(studentList->students[i].name);
       exist = true;
-      // printf("Student found:\n");
-      // printf("Name: %s", studentList->students[i].name);
-      // printf("Matric Number: %s", studentList->students[i].rollNumber);
-      // printf("Age: %d", studentList->students[i].age);
-      // printf("GPA: %.2f", studentList->students[i].gpa);
+      printf("Student found:\n");
+      printf("Name: %s", studentList->students[i].name);
+      printf("Matric Number: %s", studentList->students[i].rollNumber);
+      printf("Age: %d", studentList->students[i].age);
+      printf("GPA: %.2f", studentList->students[i].gpa);
       break;
     }
   }
@@ -157,8 +197,7 @@ void updateStudent(StudentList *studentList)
 {
   Student draftStudent;
 
-  printf("Enter the matric number of the student to update: ");
-  scanf("%s", draftStudent.rollNumber);
+  getRollNumberWithPrompt(draftStudent.rollNumber, sizeof(&draftStudent.rollNumber), "Enter the matric number of the student to update: ");
 
   for (size_t i = 0; i < studentList->studentCount; i++)
   {
@@ -166,22 +205,12 @@ void updateStudent(StudentList *studentList)
     printf("%s", studentList->students[i].rollNumber);
 
     // if (strcmp(draftStudent.rollNumber, studentList->students[i].rollNumber) == 0)
-    if(1)
+    if (1)
     {
-      printf("Enter updated details: \n");
-      printf("Name: \n");
-      fgets(studentList->students[i].name, sizeof(studentList->students[i].name), stdin);
-      studentList->students[i].name[strlen(studentList->students[i].name) - 1] = '\0';
-
-      printf("Matric Number: \n");
-      fgets(studentList->students[i].rollNumber, sizeof(studentList->students[i].rollNumber), stdin);
-      studentList->students[i].rollNumber[strlen(studentList->students[i].rollNumber) - 1] = '\0';
-
-      printf("Age: \n");
-      studentList->students[i].age = getInteger();
-
-      printf("GPA: \n");
-      studentList->students[i].gpa = getDouble();
+      getName(studentList->students[i].name, sizeof(studentList->students[i].name));
+      getRollNumber(studentList->students[i].rollNumber, sizeof(studentList->students[i].rollNumber));
+      getAge(&studentList->students[i].age);
+      getGPA(&studentList->students[i].gpa);
 
       // print update successful
 
@@ -197,9 +226,11 @@ int main()
   StudentList studentList;
 
   initializeStudentList(&studentList);
+  // addStudent(&studentList);
+  // addStudent(&studentList);
+  addStudent(&studentList);
   displayStudent(&studentList);
-  addStudent(&studentList);
-  addStudent(&studentList);
-  addStudent(&studentList);
+  updateStudent(&studentList);
   searchStudent(&studentList);
+  displayStudent(&studentList);
 }

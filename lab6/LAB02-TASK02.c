@@ -130,6 +130,12 @@ void initializeStudentList(StudentList *studentList)
 
 void displayStudent(StudentList *studentList)
 {
+  if (studentList->studentCount <= 0)
+  {
+    printf("No students found in record\n");
+    return;
+  }
+
   printf("Student Record\n");
   for (size_t i = 0; i < studentList->studentCount; i++)
   {
@@ -185,47 +191,120 @@ void searchStudent(StudentList *studentList)
     }
   }
 
-  printf("No students found in the record.\n");
+  printf("No student with name, %s found in the record.\n", name);
 }
 
 void updateStudent(StudentList *studentList)
 {
-  Student draftStudent;
-
-  getRollNumberWithPrompt(draftStudent.rollNumber, sizeof(&draftStudent.rollNumber), "Enter the matric number of the student to update: ");
+  char rollNumber[7];
+  getString(rollNumber, sizeof(rollNumber), "Enter the matric number of the student to update: ");
 
   for (size_t i = 0; i < studentList->studentCount; i++)
   {
-    printf("%s", draftStudent.rollNumber);
-    printf("%s", studentList->students[i].rollNumber);
-
-    // if (strcmp(draftStudent.rollNumber, studentList->students[i].rollNumber) == 0)
-    if (1)
+    if (strcmp(rollNumber, studentList->students[i].rollNumber) == 0)
     {
+      printf("Enter updated details:\n");
       getName(studentList->students[i].name, sizeof(studentList->students[i].name));
       getRollNumber(studentList->students[i].rollNumber, sizeof(studentList->students[i].rollNumber));
       getAge(&studentList->students[i].age);
       getGPA(&studentList->students[i].gpa);
 
-      // print update successful
+      printf("\nStudent details updated successfully!\n");
 
       return;
     }
   }
 
   // not found
+  printf("No student with matric number, %s found in the record.\n", rollNumber);
+}
+
+void removeStudent(StudentList *studentList)
+{
+  char rollNumber[7];
+
+  getString(rollNumber, sizeof(rollNumber), "Enter the matric number of the student to delete: ");
+
+  for (size_t i = 0; i < studentList->studentCount; i++)
+  {
+    if (strcmp(rollNumber, studentList->students[i].rollNumber) == 0)
+    {
+      Student lastStudent = studentList->students[studentList->studentsSize - 1];
+      studentList->students[i] = lastStudent;
+      studentList->studentCount--;
+
+      // if current count is <= 1/4 of max size, allocate less memory
+      if (studentList->studentCount * 4 < studentList->studentsSize)
+      {
+        printf("I'm being runnnnnnnnn");
+        studentList->studentsSize /= 2;
+        studentList->students = realloc(studentList->students, sizeof(Student) * studentList->studentsSize);
+        if (studentList->students == NULL)
+        {
+          printf("Error allocating memory");
+          exit(1);
+        }
+      }
+
+      printf("\nStudent record deleted successfully!\n");
+      return;
+    }
+  }
+
+  printf("No student with matric number, %s found in the record.\n", rollNumber);
 }
 
 int main()
 {
   StudentList studentList;
-
   initializeStudentList(&studentList);
-  // addStudent(&studentList);
-  // addStudent(&studentList);
-  addStudent(&studentList);
-  displayStudent(&studentList);
-  updateStudent(&studentList);
-  searchStudent(&studentList);
-  displayStudent(&studentList);
+
+  printf("Welcome to Student Record Management System\n\n");
+  printf("Menu:\n\n");
+  printf("1. Add a student\n");
+  printf("2. Display all students\n");
+  printf("3. Search for a student\n");
+  printf("4. Update student details\n");
+  printf("5. Delete a student record\n");
+  printf("6. Exit\n\n");
+
+  int choice;
+  while (1)
+  {
+    choice = getInteger("Enter your choice: ");
+    printf("\n");
+
+    switch (choice)
+    {
+    case 1:
+      addStudent(&studentList);
+      break;
+
+    case 2:
+      displayStudent(&studentList);
+      break;
+
+    case 3:
+      searchStudent(&studentList);
+      break;
+
+    case 4:
+      updateStudent(&studentList);
+      break;
+
+    case 5:
+      removeStudent(&studentList);
+      break;
+
+    case 6:
+      exit(0);
+      break;
+
+    default:
+      printf("Invalid choice.\n");
+      break;
+    }
+
+    printf("\n");
+  }
 }

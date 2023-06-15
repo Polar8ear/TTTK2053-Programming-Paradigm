@@ -61,9 +61,9 @@ void getString(char str[], size_t size, char prompt[])
     //  Then, with %*c, it reads newline character and here used * indicates that this newline character is discarded.
     // reference: https://stackoverflow.com/questions/314401/how-to-read-a-line-from-the-console-in-c
 
-    if (strlen(raw) >= size)
+    if (strlen(raw) > size)
     {
-      printf("Come on lah enter a string with less than %ld characters\n", size);
+      printf("Please enter a string with less than %ld characters\n", size);
       continue;
     }
 

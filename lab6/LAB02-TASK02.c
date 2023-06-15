@@ -170,27 +170,22 @@ void addStudent(StudentList *studentList)
 void searchStudent(StudentList *studentList)
 {
   char name[256];
-  printf("Enter the name of the student to search:\n");
-  fgets(name, 256, stdin);
-  bool exist = false;
+  getString(name, sizeof(name), "Enter the name of the student to search:\n");
+  printf("\n");
   for (int i = 0; i < studentList->studentCount; i++)
   {
-    printf("%s", name);
     if (strcmp(studentList->students[i].name, name) == 0)
     {
-      exist = true;
       printf("Student found:\n");
-      printf("Name: %s", studentList->students[i].name);
-      printf("Matric Number: %s", studentList->students[i].rollNumber);
-      printf("Age: %d", studentList->students[i].age);
-      printf("GPA: %.2f", studentList->students[i].gpa);
-      break;
+      printf("Name: %s\n", studentList->students[i].name);
+      printf("Matric Number: %s\n", studentList->students[i].rollNumber);
+      printf("Age: %d\n", studentList->students[i].age);
+      printf("GPA: %.2f\n", studentList->students[i].gpa);
+      return;
     }
   }
-  if (exist == false)
-  {
-    printf("Student not found:");
-  }
+
+  printf("No students found in the record.\n");
 }
 
 void updateStudent(StudentList *studentList)

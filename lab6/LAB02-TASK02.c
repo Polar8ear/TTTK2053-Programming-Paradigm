@@ -229,7 +229,7 @@ void removeStudent(StudentList *studentList)
   {
     if (strcmp(rollNumber, studentList->students[i].rollNumber) == 0)
     {
-      Student lastStudent = studentList->students[studentList->studentsSize - 1];
+      Student lastStudent = studentList->students[studentList->studentCount - 1];
       studentList->students[i] = lastStudent;
       studentList->studentCount--;
 

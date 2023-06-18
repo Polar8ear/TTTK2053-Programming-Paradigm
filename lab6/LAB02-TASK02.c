@@ -110,8 +110,8 @@ typedef struct
 typedef struct
 {
   Student *students;
-  size_t studentCount;
-  size_t studentsSize;
+  size_t count;
+  size_t size;
 } StudentList;
 
 // Operation Functions
@@ -124,20 +124,20 @@ void initializeStudentList(StudentList *studentList)
     printf("Error allocating memory");
     exit(1);
   }
-  studentList->studentCount = 0;
-  studentList->studentsSize = INITIAL_ARRAY_SIZE;
+  studentList->count = 0;
+  studentList->size = INITIAL_ARRAY_SIZE;
 }
 
 void displayStudent(StudentList *studentList)
 {
-  if (studentList->studentCount <= 0)
+  if (studentList->count <= 0)
   {
     printf("No students found in record\n");
     return;
   }
 
   printf("Student Record\n");
-  for (size_t i = 0; i < studentList->studentCount; i++)
+  for (size_t i = 0; i < studentList->count; i++)
   {
     printf("Name: %s\n", studentList->students[i].name);
     printf("Matric Number: %s\n", studentList->students[i].rollNumber);
@@ -149,10 +149,10 @@ void displayStudent(StudentList *studentList)
 
 void addStudent(StudentList *studentList)
 {
-  if (studentList->studentCount == studentList->studentsSize)
+  if (studentList->count == studentList->size)
   {
-    studentList->studentsSize *= 2;
-    studentList->students = (Student *)realloc(studentList->students, sizeof(Student) * studentList->studentsSize);
+    studentList->size *= 2;
+    studentList->students = (Student *)realloc(studentList->students, sizeof(Student) * studentList->size);
 
     if (studentList->students == NULL)
     {
@@ -169,8 +169,8 @@ void addStudent(StudentList *studentList)
   getAge(&newStudent.age);
   getGPA(&newStudent.gpa);
 
-  studentList->students[studentList->studentCount] = newStudent;
-  studentList->studentCount++;
+  studentList->students[studentList->count] = newStudent;
+  studentList->count++;
   printf("\n");
 }
 
@@ -179,7 +179,7 @@ void searchStudent(StudentList *studentList)
   char name[256];
   getString(name, sizeof(name), "Enter the name of the student to search:\n");
   printf("\n");
-  for (int i = 0; i < studentList->studentCount; i++)
+  for (int i = 0; i < studentList->count; i++)
   {
     if (strcmp(studentList->students[i].name, name) == 0)
     {
@@ -201,7 +201,7 @@ void updateStudent(StudentList *studentList)
   char rollNumber[7];
   getString(rollNumber, sizeof(rollNumber), "Enter the matric number of the student to update: ");
 
-  for (size_t i = 0; i < studentList->studentCount; i++)
+  for (size_t i = 0; i < studentList->count; i++)
   {
     if (strcmp(rollNumber, studentList->students[i].rollNumber) == 0)
     {
@@ -227,19 +227,19 @@ void removeStudent(StudentList *studentList)
 
   getString(rollNumber, sizeof(rollNumber), "Enter the matric number of the student to delete: ");
 
-  for (size_t i = 0; i < studentList->studentCount; i++)
+  for (size_t i = 0; i < studentList->count; i++)
   {
     if (strcmp(rollNumber, studentList->students[i].rollNumber) == 0)
     {
-      Student lastStudent = studentList->students[studentList->studentCount - 1];
+      Student lastStudent = studentList->students[studentList->count - 1];
       studentList->students[i] = lastStudent;
-      studentList->studentCount--;
+      studentList->count--;
 
       // if current count is <= 1/4 of max size, allocate less memory
-      if (studentList->studentCount * 4 < studentList->studentsSize)
+      if (studentList->count * 4 < studentList->size)
       {
-        studentList->studentsSize /= 2;
-        studentList->students = realloc(studentList->students, sizeof(Student) * studentList->studentsSize);
+        studentList->size /= 2;
+        studentList->students = realloc(studentList->students, sizeof(Student) * studentList->size);
         if (studentList->students == NULL)
         {
           printf("Error allocating memory");

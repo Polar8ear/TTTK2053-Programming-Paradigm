@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define INITIAL_STUDENT_COUNT 8
+#define INITIAL_ARRAY_SIZE 8
 
 // utility functions
 
@@ -118,14 +118,14 @@ typedef struct
 
 void initializeStudentList(StudentList *studentList)
 {
-  studentList->students = malloc(sizeof(Student) * INITIAL_STUDENT_COUNT);
+  studentList->students = malloc(sizeof(Student) * INITIAL_ARRAY_SIZE);
   if (studentList->students == NULL)
   {
     printf("Error allocating memory");
     exit(1);
   }
   studentList->studentCount = 0;
-  studentList->studentsSize = INITIAL_STUDENT_COUNT;
+  studentList->studentsSize = INITIAL_ARRAY_SIZE;
 }
 
 void displayStudent(StudentList *studentList)

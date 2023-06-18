@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define INITIAL_STUDENT_COUNT 10
+#define INITIAL_STUDENT_COUNT 8
 
 // utility functions
 
@@ -156,7 +156,7 @@ void addStudent(StudentList *studentList)
 
     if (studentList->students == NULL)
     {
-      printf("Error allocating memory");
+      printf("Error allocating memory\n");
       exit(1);
     }
   }
@@ -171,6 +171,7 @@ void addStudent(StudentList *studentList)
 
   studentList->students[studentList->studentCount] = newStudent;
   studentList->studentCount++;
+  printf("\n");
 }
 
 void searchStudent(StudentList *studentList)
@@ -187,11 +188,12 @@ void searchStudent(StudentList *studentList)
       printf("Matric Number: %s\n", studentList->students[i].rollNumber);
       printf("Age: %d\n", studentList->students[i].age);
       printf("GPA: %.2f\n", studentList->students[i].gpa);
+      printf("\n");
       return;
     }
   }
 
-  printf("No student with name, %s found in the record.\n", name);
+  printf("No student with name, %s found in the record.\n\n", name);
 }
 
 void updateStudent(StudentList *studentList)
@@ -209,14 +211,14 @@ void updateStudent(StudentList *studentList)
       getAge(&studentList->students[i].age);
       getGPA(&studentList->students[i].gpa);
 
-      printf("\nStudent details updated successfully!\n");
+      printf("\nStudent details updated successfully!\n\n");
 
       return;
     }
   }
 
   // not found
-  printf("No student with matric number, %s found in the record.\n", rollNumber);
+  printf("No student with matric number, %s found in the record.\n\n", rollNumber);
 }
 
 void removeStudent(StudentList *studentList)
@@ -236,7 +238,6 @@ void removeStudent(StudentList *studentList)
       // if current count is <= 1/4 of max size, allocate less memory
       if (studentList->studentCount * 4 < studentList->studentsSize)
       {
-        printf("I'm being runnnnnnnnn");
         studentList->studentsSize /= 2;
         studentList->students = realloc(studentList->students, sizeof(Student) * studentList->studentsSize);
         if (studentList->students == NULL)
@@ -246,12 +247,12 @@ void removeStudent(StudentList *studentList)
         }
       }
 
-      printf("\nStudent record deleted successfully!\n");
+      printf("\nStudent record deleted successfully!\n\n");
       return;
     }
   }
 
-  printf("No student with matric number, %s found in the record.\n", rollNumber);
+  printf("No student with matric number, %s found in the record.\n\n", rollNumber);
 }
 
 int main()
@@ -304,7 +305,5 @@ int main()
       printf("Invalid choice.\n");
       break;
     }
-
-    printf("\n");
   }
 }

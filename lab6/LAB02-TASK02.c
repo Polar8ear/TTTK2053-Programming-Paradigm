@@ -53,7 +53,7 @@ double getDouble(char prompt[])
 
 void getString(char str[], size_t size, char prompt[])
 {
-  char raw[256] = ""; // A raw input string with sufficiently large size, initialised to empty string.
+  char raw[512] = ""; // A raw input string with sufficiently large size, initialised to empty string.
   while (1)
   {
     printf("%s", prompt);

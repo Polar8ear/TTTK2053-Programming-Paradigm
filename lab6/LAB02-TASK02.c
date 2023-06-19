@@ -7,7 +7,9 @@
 #define NAME_SIZE 256
 #define ROLL_NUMBER_SIZE 7 // assuming A000000
 
-// utility functions
+
+
+// utility input functions
 
 int getInteger(char prompt[])
 {
@@ -17,7 +19,7 @@ int getInteger(char prompt[])
     printf("%s", prompt);
     int termCount = scanf("%lf", &number);
     while (getchar() != '\n')
-      ;
+      ; // remove extra characters in the input buffer, stdin.
 
     if (termCount == 0 || number - (int)number != 0.0)
     {
@@ -111,10 +113,10 @@ typedef struct
 
 typedef struct
 {
-  Student *students;
-  size_t count;
-  size_t size;
-} StudentList;
+  Student *students; // actual array storing the students
+  size_t count;      // the current number of students in the array
+  size_t size;       // the current maximum allowed size of the array
+} StudentList;       // A dynamic array struct to collect all important properties together
 
 // Operation Functions
 
@@ -151,11 +153,22 @@ void displayStudent(StudentList *studentList)
 
 void addStudent(StudentList *studentList)
 {
+  // When we have equal number of students and size,
+  // we need to increase the size of the array to
+  // add more student into the array
   if (studentList->count == studentList->size)
   {
+    // the algorithm multiply the size by 2.
+    // This is not necessary and can be modified
+    // according to different situation.
+    // We choose this way because when we add student
+    // in a normal circumstances, we are adding a batch of students
+    // which will be a lot of data coming in in a time
+    // Therefore this can avoid multiple reallocation.
     studentList->size *= 2;
     studentList->students = (Student *)realloc(studentList->students, sizeof(Student) * studentList->size);
 
+    // students pointer will be null if reallocation fail.
     if (studentList->students == NULL)
     {
       printf("Error allocating memory\n");

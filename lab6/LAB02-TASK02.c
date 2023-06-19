@@ -4,6 +4,8 @@
 #include <stdbool.h>
 
 #define INITIAL_ARRAY_SIZE 8
+#define NAME_SIZE 256
+#define ROLL_NUMBER_SIZE 7 // assuming A000000
 
 // utility functions
 
@@ -101,8 +103,8 @@ void getAge(int *age)
 
 typedef struct
 {
-  char name[256];
-  char rollNumber[7]; // Assume roll number to be in the format of A000000
+  char name[NAME_SIZE];
+  char rollNumber[ROLL_NUMBER_SIZE]; // Assume roll number to be in the format of A000000
   unsigned int age;
   float gpa;
 } Student;
@@ -176,7 +178,7 @@ void addStudent(StudentList *studentList)
 
 void searchStudent(StudentList *studentList)
 {
-  char name[256];
+  char name[NAME_SIZE];
   getString(name, sizeof(name), "Enter the name of the student to search:\n");
   printf("\n");
   for (int i = 0; i < studentList->count; i++)
@@ -198,7 +200,7 @@ void searchStudent(StudentList *studentList)
 
 void updateStudent(StudentList *studentList)
 {
-  char rollNumber[7];
+  char rollNumber[ROLL_NUMBER_SIZE];
   getString(rollNumber, sizeof(rollNumber), "Enter the matric number of the student to update: ");
 
   for (size_t i = 0; i < studentList->count; i++)
@@ -223,7 +225,7 @@ void updateStudent(StudentList *studentList)
 
 void removeStudent(StudentList *studentList)
 {
-  char rollNumber[7];
+  char rollNumber[ROLL_NUMBER_SIZE];
 
   getString(rollNumber, sizeof(rollNumber), "Enter the matric number of the student to delete: ");
 

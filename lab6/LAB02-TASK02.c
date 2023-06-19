@@ -7,21 +7,48 @@
 #define NAME_SIZE 256
 #define ROLL_NUMBER_SIZE 7 // assuming A000000
 
-
-
 // utility input functions
 
-int getInteger(char prompt[])
+void getString(char str[], size_t size, char prompt[])
 {
-  double number;
+  char raw[512] = ""; // A raw input string with sufficiently large size, initialised to empty string.
   while (1)
   {
     printf("%s", prompt);
-    int termCount = scanf("%lf", &number);
-    while (getchar() != '\n')
-      ; // remove extra characters in the input buffer, stdin.
+    scanf("%[^\n]%*c", raw);
 
-    if (termCount == 0 || number - (int)number != 0.0)
+    //  ^\n tells to take input until newline doesn't get encountered.
+    //  Then, with %*c, it reads newline character and here used * indicates that this newline character is discarded.
+    // reference: https://stackoverflow.com/questions/314401/how-to-read-a-line-from-the-console-in-c
+    if (strlen(raw) == 0)
+    {
+      printf("Please enter some characters\n");
+      getchar();
+      continue;
+    }
+
+    if (strlen(raw) > size)
+    {
+      printf("Please enter a string with less than %ld characters\n", size);
+      continue;
+    }
+
+    strcpy(str, raw);
+    return;
+  };
+}
+
+int getInteger(char prompt[])
+{
+  int number;
+  while (1)
+  {
+    char rawNumberString[512];
+    int charactersRead;
+    getString(rawNumberString, sizeof(rawNumberString), prompt);
+    int termCount = sscanf(rawNumberString, "%d%n", &number, &charactersRead);
+
+    if (termCount != 1 || number - (int)number != 0.0 || charactersRead != strlen(rawNumberString))
     {
       printf("Please enter a valid integer input\n");
       continue;
@@ -37,12 +64,12 @@ double getDouble(char prompt[])
   double number;
   while (1)
   {
-    printf("%s", prompt);
-    int termCount = scanf("%lf", &number);
-    while (getchar() != '\n')
-      ;
+    char rawNumberString[512];
+    int charactersRead;
+    getString(rawNumberString, sizeof(rawNumberString), prompt);
+    int termCount = sscanf(rawNumberString, "%lf%n", &number, &charactersRead);
 
-    if (termCount == 0)
+    if (termCount != 1 || charactersRead != strlen(rawNumberString))
     {
       printf("Please enter a valid decimal input\n");
       continue;
@@ -51,29 +78,6 @@ double getDouble(char prompt[])
     // If no error is found
     return number;
   }
-}
-
-void getString(char str[], size_t size, char prompt[])
-{
-  char raw[512] = ""; // A raw input string with sufficiently large size, initialised to empty string.
-  while (1)
-  {
-    printf("%s", prompt);
-    scanf("%[^\n]%*c", raw);
-
-    //  ^\n tells to take input until newline doesn't get encountered.
-    //  Then, with %*c, it reads newline character and here used * indicates that this newline character is discarded.
-    // reference: https://stackoverflow.com/questions/314401/how-to-read-a-line-from-the-console-in-c
-
-    if (strlen(raw) > size)
-    {
-      printf("Please enter a string with less than %ld characters\n", size);
-      continue;
-    }
-
-    strcpy(str, raw);
-    return;
-  };
 }
 
 void getName(char str[], size_t size)

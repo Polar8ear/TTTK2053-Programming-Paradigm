@@ -3,10 +3,16 @@
 #include <time.h>
 #include <limits.h>
 
+// using a macro to define the maximum array size
+// so it can be changed easily to generate different
+// number of elements
+#define ARRAY_SIZE 10
+
 int calculateSum(int array_list[], int size);
 int initialize_array(int array_list[], int size);
 struct Maximum findMaximum(int array_list[], int size);
 void reverseArray(int *array, int size);
+
 
 struct Maximum
 {
@@ -16,8 +22,8 @@ struct Maximum
 
 int main()
 {
-    int size = 10;
-    int integer_array[10];
+    int size = ARRAY_SIZE;
+    int integer_array[ARRAY_SIZE];
     initialize_array(integer_array, size);
 
     printf("Original Array: ");

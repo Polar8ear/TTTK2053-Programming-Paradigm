@@ -27,13 +27,13 @@ int main()
     initialize_array(integer_array, size);
 
     printf("Original Array: ");
-    for (size_t i = 0; i < 10; i++)
+    for (size_t i = 0; i < size; i++)
     {
         printf("%d ", integer_array[i]);
     }
     printf("\n\n");
 
-    int sum = calculateSum(integer_array, 10);
+    int sum = calculateSum(integer_array, size);
     printf("Sum of all elements: %d\n", sum);
 
     struct Maximum m1 = findMaximum(integer_array, size);
@@ -55,6 +55,7 @@ int main()
 
 int initialize_array(int array_list[], int size)
 {
+    // initialize random seed to generate random numbers
     srand(time(0));
     for (int i = 0; i < size; i++)
     {
@@ -75,6 +76,7 @@ int calculateSum(int array_list[], int size)
     return sum;
 }
 
+// using Maximum struct to allow returning of multiple values, index and value
 struct Maximum findMaximum(int array_list[], int size)
 {
     struct Maximum m1 = {0, INT_MIN};
@@ -90,6 +92,7 @@ struct Maximum findMaximum(int array_list[], int size)
     return m1;
 }
 
+// using array []
 // void reverseArray(int array[], int size)
 // {
 //     //when an odd integer number divided by 2 in C will be rounded down
@@ -105,18 +108,19 @@ struct Maximum findMaximum(int array_list[], int size)
 //     }
 // }
 
+// using raw pointer
 void reverseArray(int *array, int size)
 {
     // when an odd integer number divided by 2 in C will be rounded down
+    // therefore all the elements other than the center will be switched
     for (int i = 0; i < size / 2; i++)
     {
         // [0,1,2,3,4,5]
         int temp = *(array + i);
-        // printf("%d ", *(array +  i));
-        // // temp = 0
+        // temp = 0
         *(array + i) = *(array + (size - i - 1));
-        // // [5,1,2,3,4,5]
+        // [5,1,2,3,4,5]
         *(array + (size - i - 1)) = temp;
-        // // [5,1,2,3,4,0]
+        // [5,1,2,3,4,0]
     }
 }

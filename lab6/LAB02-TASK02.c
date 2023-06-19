@@ -7,11 +7,13 @@
 #define NAME_SIZE 256
 #define ROLL_NUMBER_SIZE 7 // assuming A000000
 
+#define RAW_INPUT_SIZE 512  // A sufficiently large size for rwa input string
+
 // utility input functions
 
 void getString(char str[], size_t size, char prompt[])
 {
-  char raw[512] = ""; // A raw input string with sufficiently large size, initialised to empty string.
+  char raw[RAW_INPUT_SIZE];
   while (1)
   {
     printf("%s", prompt);
@@ -22,14 +24,14 @@ void getString(char str[], size_t size, char prompt[])
     // reference: https://stackoverflow.com/questions/314401/how-to-read-a-line-from-the-console-in-c
     if (strlen(raw) == 0)
     {
-      printf("Please enter some characters\n");
+      printf("Please enter at least 1 character\n");
       getchar();
       continue;
     }
 
     if (strlen(raw) > size)
     {
-      printf("Please enter a string with less than %ld characters\n", size);
+      printf("Please enter less than %ld characters\n", size);
       continue;
     }
 
@@ -43,12 +45,24 @@ int getInteger(char prompt[])
   int number;
   while (1)
   {
-    char rawNumberString[512];
+    char rawNumberString[RAW_INPUT_SIZE];
     int charactersRead;
     getString(rawNumberString, sizeof(rawNumberString), prompt);
+
+    // use sscanf to scan again from the string entered.
+    // termCount will return if it succesfully found an integer
+    // charactersRead will be the number of characters read so far
+    // so we will check charactersRead against strlen(rawString) to
+    // know if there's remaining character in the input string, if
+    // true, meaning the input is invalid.
+    //
+    // example, rawNumberString="23.4d"
+    // 23 will be read as 23
+    // which shouldnt be the case
+    // which is why we need to check charactersRead
     int termCount = sscanf(rawNumberString, "%d%n", &number, &charactersRead);
 
-    if (termCount != 1 || number - (int)number != 0.0 || charactersRead != strlen(rawNumberString))
+    if (termCount != 1 || charactersRead != strlen(rawNumberString))
     {
       printf("Please enter a valid integer input\n");
       continue;
@@ -64,7 +78,7 @@ double getDouble(char prompt[])
   double number;
   while (1)
   {
-    char rawNumberString[512];
+    char rawNumberString[RAW_INPUT_SIZE];
     int charactersRead;
     getString(rawNumberString, sizeof(rawNumberString), prompt);
     int termCount = sscanf(rawNumberString, "%lf%n", &number, &charactersRead);
